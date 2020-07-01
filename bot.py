@@ -13,7 +13,7 @@ async def info(ctx, name, desc, invite, icon):
     embed = discord.Embed(
         title = name,
         description = desc,
-        colour = discord.Colour.blue()
+        colour = discord.Colour.blurple()
     )
 
     embed.set_thumbnail(url=icon)
