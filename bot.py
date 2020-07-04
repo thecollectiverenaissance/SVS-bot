@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-token = process.env.BOT_TOKEN
+token = os.environ['BOT_TOKEN']
 client = commands.Bot(command_prefix = '.')
 
 @client.event
