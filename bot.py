@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 
 token = os.environ['BOT_TOKEN']
-client = commands.Bot(command_prefix = '%')
+client = commands.Bot(command_prefix = '.')
 questions = ['What is your Server\'s Name?',
     'Please give a brief Description of your Server.',
     'Please provide an invite link, or if Private, a message you\'d like displayed in place of it.',
@@ -16,49 +16,48 @@ async def on_ready():
     print('Ready!')
 
 @client.command()
-async def ping(ctx):
-    await ctx.send('Pong!')
-
-@client.event
-async def on_message(message):
+async def apply(message):
     start_embed = discord.Embed(
         description = 'Application Started - Type ".cancel" to cancel the application',
         colour = discord.Colour.blurple()
     )
     responces = []
-    if message.content.startswith('.apply'):
-        channel = message.author
+    channel = message.author
 
-        for i in questions:
-            question_embed = discord.Embed(
-                description = i,
-                colour = discord.Colour.blurple()
-            )
-            await channel.send(embed=question_embed)
-
-            def check(m):
-                if m.author == channel:
-                    responces.append(m.content)
-                return m.author == channel
-
-            msg = await client.wait_for('message', check=check)
-        await channel.send('**Your application has been submitted!**')
-        responce_channel = client.get_channel(728359983854649474)
-        print(responces)
-
-        try:
-            r = requests.get(responces[2])
-            soup = BeautifulSoup(r.content, "html.parser")
-            image = soup.find("meta",  property="og:image")["content"]
-        except:
-            image = 'N/A'
-
-        responce_embed = discord.Embed(
-            description = f"\n{questions[0]} -\n{responces[0]}\n{questions[1]} -\n{responces[1]}\n{questions[2]} -\n{responces[2]}\n{questions[3]} -\n{responces[3]}\nServer Image (taken from invite) -\n{image}",
+    for i in questions:
+        question_embed = discord.Embed(
+            description = i,
             colour = discord.Colour.blurple()
         )
+        await channel.send(embed=question_embed)
 
-        await responce_channel.send(embed=responce_embed)
+        def check(m):
+            if m.author == channel and isinstance(m.channel, discord.channel.DMChannel):
+                responces.append(m.content)
+            return m.author == channel and isinstance(m.channel, discord.channel.DMChannel)
+
+        msg = await client.wait_for('message', check=check)
+    await channel.send('**Your application has been submitted!**')
+    responce_channel = client.get_channel(556614414153809963)
+    print(responces)
+
+    try:
+        r = requests.get(responces[2])
+        soup = BeautifulSoup(r.content, "html.parser")
+        image = soup.find("meta",  property="og:image")["content"]
+    except:
+        image = 'N/A'
+
+    responce_embed = discord.Embed(
+        description = f"\n{questions[0]} -\n{responces[0]}\n{questions[1]} -\n{responces[1]}\n{questions[2]} -\n{responces[2]}\n{questions[3]} -\n{responces[3]}\nServer Image (taken from invite) -\n{image}",
+        colour = discord.Colour.blurple()
+    )
+
+    await responce_channel.send(embed=responce_embed)
+
+@client.command()
+async def ping(ctx):
+    await ctx.send('Pong!')
 
 @client.command()
 async def info(ctx, name, desc, invite, icon):
