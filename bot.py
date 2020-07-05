@@ -74,4 +74,17 @@ async def info(ctx, name, desc, invite, icon):
 
     await ctx.send(embed=embed)
 
+@client.command()
+async def hof(ctx, title,desc,ep,art,single):
+    embed = discord.Embed(
+        title = title,
+        description = desc,
+        colour = discord.Colour.gold()
+    )
+    embed.add_field(name='Best Overall EP', value=ep, inline=False)
+    embed.add_field(name='Best Cover Art', value=art, inline=False)
+    embed.add_field(name='Best Single', value=single, inline=False)
+
+    await ctx.send(embed=embed)
+
 client.run(token)
