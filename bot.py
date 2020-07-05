@@ -4,7 +4,7 @@ from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
 
-token = 'NzEwNjk3MTE4NDE0OTI5OTUw.XwFOFA.CB-LwJim7OBKIN92lGJK9qZFLUY'
+token = os.environ['BOT_TOKEN']
 client = commands.Bot(command_prefix = '%')
 questions = ['What is your Server\'s Name?',
     'Please give a brief Description of your Server.',
