@@ -54,7 +54,7 @@ async def apply(message):
 
         msg = await client.wait_for('message', check=check)
     await channel.send(application_end_message)
-    responce_channel = client.get_channel(556614414153809963)
+    responce_channel = client.get_channel(728359983854649474)
     print(responces)
 
     try:
