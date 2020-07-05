@@ -9,6 +9,11 @@ client = commands.Bot(command_prefix = '.')
 async def on_ready():
     print('Ready!')
 
+    
+@client.command()
+async def ping(ctx):
+    await ctx.send('Pong!')
+
 @client.command()
 async def info(ctx, name, desc, invite, icon):
     embed = discord.Embed(
