@@ -87,4 +87,9 @@ async def hof(ctx, title,desc,ep,art,single):
 
     await ctx.send(embed=embed)
 
+    
+@client.command()
+async def list(ctx, title,*eps):
+    print(eps)
+
 client.run(token)
