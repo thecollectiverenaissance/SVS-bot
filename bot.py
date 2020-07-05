@@ -1,9 +1,10 @@
 import discord
+import os
 from discord.ext import commands
 from bs4 import BeautifulSoup
 import requests
 
-token = 'NzI3OTQwOTM5ODU0NjQzMjcx.XvztUQ.V1zGfRXW5IMaSGW4CFtOFeHokmU'
+token = os.environ['BOT_TOKEN']
 client = commands.Bot(command_prefix = '.')
 
 @client.event
