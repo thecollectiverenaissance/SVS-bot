@@ -75,7 +75,7 @@ async def apply(message):
     if responces[3] != '':
         responce_embed.add_field(name='Image from Survey', value=responces[3], inline=False)
     responce_embed.add_field(name='Image from Invite', value=image, inline=False)
-    responce_embed.add_field(name='', value='React with ✅ to use survey image. React with ☑️ to use invite image. React with 🔴 to deny form.', inline=True)
+    responce_embed.add_field(name='Reactions', value='React with ✅ to use survey image. React with ☑️ to use invite image. React with 🔴 to deny form.', inline=True)
 
     #Mod verification surey should be posted
     react_msg = await responce_channel.send(embed=responce_embed)
