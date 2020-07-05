@@ -10,6 +10,22 @@ questions = ['What is your Server\'s Name?',
     'Please give a brief Description of your Server.',
     'Please provide an invite link, or if Private, a message you\'d like displayed in place of it.',
     'Please provide a link to your server image.']
+application_start_message = ''
+application_end_message = '**Your application has been submitted!**'
+
+async def server_embed(ctx, name, desc, invite, icon):
+    embed = discord.Embed(
+        title = name,
+        description = desc,
+        colour = discord.Colour.blurple()
+    )
+
+    if icon != '':
+        embed.set_thumbnail(url=icon)
+    if invite != '':
+        embed.add_field(name='Server Invite', value=invite, inline=False)
+
+    await ctx.send(embed=embed)
 
 @client.event
 async def on_ready():
@@ -37,7 +53,7 @@ async def apply(message):
             return m.author == channel and isinstance(m.channel, discord.channel.DMChannel)
 
         msg = await client.wait_for('message', check=check)
-    await channel.send('**Your application has been submitted!**')
+    await channel.send(application_end_message)
     responce_channel = client.get_channel(556614414153809963)
     print(responces)
 
@@ -49,11 +65,35 @@ async def apply(message):
         image = 'N/A'
 
     responce_embed = discord.Embed(
-        description = f"\n{questions[0]} -\n{responces[0]}\n{questions[1]} -\n{responces[1]}\n{questions[2]} -\n{responces[2]}\n{questions[3]} -\n{responces[3]}\nServer Image (taken from invite) -\n{image}",
+        title = responces[0],
+        description = responces[1],
         colour = discord.Colour.blurple()
     )
 
-    await responce_channel.send(embed=responce_embed)
+    if responces[2] != '':
+        responce_embed.add_field(name='Server Invite', value=responces[2], inline=False)
+    if responces[3] != '':
+        responce_embed.add_field(name='Image from Survey', value=responces[3], inline=False)
+    responce_embed.add_field(name='Image from Invite', value=image, inline=False)
+    responce_embed.add_field(name='', value='React with ✅ to use survey image. React with ☑️ to use invite image. React with 🔴 to deny form.', inline=True)
+
+    #Mod verification surey should be posted
+    react_msg = await responce_channel.send(embed=responce_embed)
+    competing_servers = client.get_channel(727977909540880475)
+    await react_msg.add_reaction("✅")
+    await react_msg.add_reaction("☑️")
+    await react_msg.add_reaction("🔴")
+
+    def reaction_check(reaction, user):
+        return user == message.author and str(reaction.emoji) in ['✅','☑️','🔴']
+
+    reaction, user = await client.wait_for('reaction_add', check=reaction_check)
+    if(reaction.emoji == '✅'):
+        await server_embed(competing_servers, responces[0], responces[1], responces[2], responces[3])
+    if(reaction.emoji == '☑️'):
+        await server_embed(competing_servers, responces[0], responces[1], responces[2], image)
+    if(reaction.emoji == '🔴'):
+        await responce_channel.send('Form Denied')
 
 @client.command()
 async def ping(ctx):
