@@ -13,10 +13,11 @@ async def on_ready():
 
 @client.command()
 async def ping(ctx):
-    r = requests.get('https://discord.com/invite/ZqTBnzA')
-    soup = BeautifulSoup(r.content, "html.parser")
-    image = soup.find("meta",  property="og:image")["content"]
-    await ctx.send(image)
+    await ctx.send('Pong!')
+
+@client.command()
+async def apply(ctx):
+    await ctx.author.send('DM')
 
 @client.command()
 async def info(ctx, name, desc, invite, icon):
