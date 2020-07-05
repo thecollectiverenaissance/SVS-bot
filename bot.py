@@ -43,7 +43,7 @@ async def on_message(message):
 
             msg = await client.wait_for('message', check=check)
         await channel.send('**Your application has been submitted!**')
-        responce_channel = client.get_channel(556614414153809963)
+        responce_channel = client.get_channel(728359983854649474)
         print(responces)
 
         try:
