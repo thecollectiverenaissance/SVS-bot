@@ -89,7 +89,16 @@ async def hof(ctx, title,desc,ep,art,single):
 
     
 @client.command()
-async def list(ctx, title,*eps):
-    print(eps)
+async def listlinks(ctx, title,desc,*eps):
+    
+    embed = discord.Embed(
+        title = title,
+        description = desc,
+        colour = discord.Colour.gold()
+    )
+    
+    for i in range(0,len(eps),2):
+        embed.add_field(name=eps[i], value=eps[i+1], inline=False)       
 
+    await ctx.send(embed=embed)
 client.run(token)
