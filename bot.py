@@ -126,8 +126,6 @@ async def hof(ctx, title,desc,ep,art,single):
     embed.add_field(name='Best Single', value=single, inline=False)
 
     await ctx.send(embed=embed)
-
-    
 @client.command()
 async def listlinks(ctx, title,desc,*eps):
     
@@ -137,6 +135,23 @@ async def listlinks(ctx, title,desc,*eps):
         colour = discord.Colour.gold()
     )
     
+    for i in range(0,len(eps),2):
+        embed.add_field(name=eps[i], value=eps[i+1], inline=False)       
+
+    await ctx.send(embed=embed)
+    
+@client.command()
+async def teamup(ctx, title,desc,icon,*eps):
+    
+    embed = discord.Embed(
+        title = title,
+        description = desc,
+        colour = discord.Colour.red()
+    )
+    
+    if icon != '':
+        embed.set_thumbnail(url=icon)
+        
     for i in range(0,len(eps),2):
         embed.add_field(name=eps[i], value=eps[i+1], inline=False)       
 
