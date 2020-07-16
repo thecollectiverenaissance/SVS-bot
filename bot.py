@@ -12,6 +12,7 @@ questions = ['What is your Server\'s Name?',
     'Please provide a link to your server image.']
 application_start_message = ''
 application_end_message = '**Your application has been submitted!**'
+introduction = "Welcome to the official Server vs Server competition server! Read the #faq first and then go ahead and grab your role in #role-assign to get started!"
 
 async def server_embed(ctx, name, desc, invite, icon):
     embed = discord.Embed(
@@ -30,6 +31,10 @@ async def server_embed(ctx, name, desc, invite, icon):
 @client.event
 async def on_ready():
     print('Ready!')
+    
+@client.event
+async def on_member_join(member):
+    await member.send(introduction)
 
 @client.command()
 async def apply(message):
