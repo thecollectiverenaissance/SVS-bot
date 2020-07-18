@@ -8,7 +8,7 @@ token = os.environ['BOT_TOKEN']
 client = commands.Bot(command_prefix = '.')
 questions = ['What is your Server\'s Name?',
     'Please give a brief Description of your Server.',
-    'Please provide an invite link, or if Private, a message similar to "Talk to X for more information about FKG" you\'d like displayed in place of it.',
+    'Please provide an invite link, or if Private, a message similar to "Talk to X for more information about Server" you\'d like displayed in place of it.',
     'Please provide a link to your server image.']
 application_start_message = ''
 application_end_message = '**Your application has been submitted!**'
